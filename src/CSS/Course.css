@@ -1,0 +1,30 @@
+.selecttext{
+    color:#286b4c;
+    border: #62B58E;
+    /* background-color: #bbfaea; */
+}
+.text{
+    color:white;
+}
+.period{
+    cursor: pointer;
+}
+.title{
+    color:#b562a1;
+}
+.company{
+    color: #62B58E;
+}
+.description{
+    color:white;
+}
+@media (max-width: 540px) {
+    .image{
+        height:50%;
+        width:50%;
+    
+}
+    .coursetitle{
+      overflow-y: scroll;
+          }
+}

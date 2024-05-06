@@ -1,0 +1,59 @@
+.text1{
+    color:#b562a1 ;
+}
+.text2{
+    color:#62B58E;
+  }
+.text3{
+      color:#b562a1;
+}
+.loader{
+    background-color:#1A185E;
+    z-index: 10000;
+}
+
+.m{
+    animation:m 1s infinite;
+}
+
+@keyframes m{
+ 0%{
+    opacity: 1;
+ }
+ 50%{
+    opacity: 0.5;
+ }
+ 100%{
+    opacity:0.5;
+ }
+}
+.a{
+    animation:a 1s infinite;
+}
+
+@keyframes a{
+ 0%{
+    opacity: 0.5;
+ }
+ 50%{
+    opacity: 1;
+ }
+ 100%{
+    opacity:1.5;
+ }
+}
+.s{
+    animation:s 1s infinite;
+}
+
+@keyframes s{
+ 0%{
+    opacity: 0.5;
+ }
+ 50%{
+    opacity: 0.5;
+ }
+ 100%{
+    opacity:1;
+ }
+}

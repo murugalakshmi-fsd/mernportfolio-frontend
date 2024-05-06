@@ -1,0 +1,11 @@
+/* *{
+    gap:5%;
+} */
+.title{
+    color:white;
+}
+.line{
+    width: 180px;
+    height: 1px;
+    background-color: aquamarine;
+}

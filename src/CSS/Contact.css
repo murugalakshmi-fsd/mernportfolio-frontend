@@ -1,0 +1,11 @@
+.text{
+    color:#62B58E;
+}
+img{
+    height:250px;
+}
+@media (max-width: 540px) {
+    img{
+        height:150px;
+    }
+}

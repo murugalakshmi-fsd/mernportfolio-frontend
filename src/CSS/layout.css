@@ -1,0 +1,22 @@
+.layout{
+    background-color: #1A185E;
+   
+}
+.head{
+    position:relative;
+}
+a{
+ color:#62B58E;
+}
+a:hover{
+    color:#b562a1; 
+}
+
+.dropdown-custom{
+    width: 200px;
+   
+}
+.dropdown-custom .dropdownmenu-custom{
+    max-height: 200px; 
+    overflow-y: auto;
+}
