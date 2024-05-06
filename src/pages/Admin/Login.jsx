@@ -14,7 +14,7 @@ const Login = () => {
       dispatch(ShowLoading());
       const response = await axios.post("http://localhost:5000/portfolio/admin-login", user);
       dispatch(HideLoading());
-        console.log("Response:", response);
+      console.log("Response:", response);
       console.log("Response data:", response.data);
        console.log("Token:", response.data.token);
       if (response && response.data && response.data.token) {

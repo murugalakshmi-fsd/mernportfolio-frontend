@@ -43,9 +43,6 @@ const Layout = () => {
               Signup
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown.Item as={Link} to="/admin">
-              Admin
-            </NavDropdown.Item>
         </Nav>
       </Navbar>
       <Outlet />
