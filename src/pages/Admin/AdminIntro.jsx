@@ -15,7 +15,7 @@ const AdminIntro = () => {
     const onFinish=async(values)=>{
       try{
           dispatch(ShowLoading());
-          const response = await axios.post("http://localhost:5000/api/portfolio/update-intro",{
+          const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/update-intro",{
             ...values,
             _id:portfolioData.intros._id,
       });

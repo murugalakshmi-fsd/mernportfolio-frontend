@@ -15,7 +15,7 @@ const AdminContact = () => {
     const onFinish=async(values)=>{
       try{
           dispatch(ShowLoading());
-          const response = await axios.post("http://localhost:5000/api/portfolio/update-contact",{
+          const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/update-contact",{
             ...values,
             _id:portfolioData.contacts._id,
       });
@@ -51,7 +51,7 @@ const AdminContact = () => {
         </FormItem>
 
         <FormItem name='mobile' label='Mobile'>
-            <textarea placeholder='Age'/>
+            <textarea placeholder='Mobile'/>
         </FormItem>
 
         <FormItem name='country' label='Country'>

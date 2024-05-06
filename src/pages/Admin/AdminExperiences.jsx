@@ -21,7 +21,7 @@ const AdminExperiences = () => {
       let response;
       if (selectedItemforEdit) {
         response = await axios.post(
-          "http://localhost:5000/api/portfolio/update-experience",
+          "https://mernportfolio-backend.onrender.com/portfolio/update-experience",
           {
             ...values,
             _id: selectedItemforEdit._id,

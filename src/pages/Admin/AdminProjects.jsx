@@ -22,7 +22,7 @@ const AdminProjects = () => {
         let response;
         if (selectedItemforEdit) {
           response = await axios.post(
-            "http://localhost:5000/api/portfolio/update-project",
+            "https://mernportfolio-backend.onrender.com/portfolio/update-project",
             {
               ...values,
               _id: selectedItemforEdit._id,

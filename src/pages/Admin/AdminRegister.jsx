@@ -11,7 +11,7 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/portfolio/admin-register", { username, password });
+      const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/admin-register", { username, password });
       if (response.status === 201) {
             window.location.href = "/admin-login";
              message.success("Login Successfully");

@@ -18,7 +18,7 @@ const AdminAbout = () => {
       values.skills = tempSkills;
       dispatch(ShowLoading());
       const response = await axios.post(
-        "http://localhost:5000/api/portfolio/update-about",
+        "https://mernportfolio-backend.onrender.com/portfolio/update-about",
         {
           ...values,
           _id: portfolioData.abouts._id,

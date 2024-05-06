@@ -9,7 +9,7 @@ const Intro = () => {
 
   const handleExportPDF = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/portfolio/export-pdf', {
+      const response = await axios.get('https://mernportfolio-backend.onrender.com/portfolio/export-pdf', {
         responseType: 'blob', // Set response type to blob
       });
 
