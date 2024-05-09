@@ -60,9 +60,9 @@ function App() {
       <Route path="project" element={<Projects/>}/>
       <Route path="course" element={<Courses/>}/>
       <Route path="contact" element={<Contact/>}/>
-      <Route path="admin" element={<Admin/>}/>
       <Route path="admin-login" element={<Login/>}/>
       <Route path="admin-register" element={<AdminRegister/>}/>
+      <Route path="admin" element={<Admin/>}/>
      </Route>
      </Routes>
     
