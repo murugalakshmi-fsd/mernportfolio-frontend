@@ -1,4 +1,4 @@
 [[redirects]]
-from="/admin-login"
-to="/admin"
+from="/*"
+to="/index.html"
 status=200
