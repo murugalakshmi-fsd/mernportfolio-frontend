@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import SectionTitle from "../../components/SectionTitle.jsx";
-import "../../CSS/Projects.css";
-import { projects } from "../../resources/projects.jsx";
+import SectionTitle from "../components/SectionTitle.jsx";
+import { courses } from "../resources/courses.jsx";
+import "../CSS/Course.css";
 import { useSelector } from "react-redux";
 
-const Projects = () => {
+const Courses = () => {
   const [selectedIndex, setselectedIndex] = useState(0);
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  const {projects}=portfolioData || {};
+  const {courses}=portfolioData || {};
   return (
     <div className="p-4">
-      <SectionTitle title="Projects" />
+      <SectionTitle title="Courses" />
       <div className="container d-flex flex-column flex-sm-row py-10 gap-10">
-        <div className="col-md-4 d-flex flex-md-column gap-3 border-start border-1 border-secondary flex-sm-row projecttitle">
-          {projects.map((project, index) => (
+        <div className="col-md-4 d-flex flex-md-column gap-3 border-start border-1 border-secondary flex-sm-row coursetitle">
+          {courses.map((course, index) => (
             <div
               onClick={() => {
                 setselectedIndex(index);
@@ -27,22 +27,26 @@ const Projects = () => {
                     : "text"
                 }`}
               >
-                {project.title}
+                {course.title}
               </h6>
             </div>
           ))}
         </div>
         <div className="col-md-8 d-flex flex-column align-items-center justify-content-center gap-5 flex-sm-row py-3">
-            <img src={projects[selectedIndex].image} alt="" className="image col-md-4"/>
-        <div className="d-flex flex-column gap-2">
-          <h5 className="title">{projects[selectedIndex].title}</h5>
-          <p className="text-white">{projects[selectedIndex].description}</p>
+          <div className="d-flex flex-column gap-1">
+            <h5 className="title">{courses[selectedIndex].title}</h5>
+            <p className="text-white">{courses[selectedIndex].description}</p>
+               
+            </div>
+          <img
+            src={courses[selectedIndex].image}
+            alt=""
+            className="image col-md-4"
+          />
         </div>
-        </div>
-        
       </div>
     </div>
   );
 };
 
-export default Projects;
+export default Courses;

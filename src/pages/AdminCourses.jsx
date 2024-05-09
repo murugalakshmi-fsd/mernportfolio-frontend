@@ -1,9 +1,9 @@
 import { Form, Modal,message } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import React, { useState } from 'react';
-import "../../CSS/AdminExperience.css";
+import "../CSS/AdminExperience.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { HideLoading, ShowLoading, ReloadData } from "../../redux/rootslice";
+import { HideLoading, ShowLoading, ReloadData } from "../redux/rootslice";
 import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../CSS/intro.css";
+import "../CSS/intro.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 const Intro = () => {

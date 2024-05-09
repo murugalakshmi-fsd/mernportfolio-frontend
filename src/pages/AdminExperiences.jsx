@@ -1,10 +1,10 @@
 import useSelection from "antd/es/table/hooks/useSelection";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "../../CSS/AdminExperience.css";
+import "../CSS/AdminExperience.css";
 import { Form, Input, Modal, message } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { HideLoading, ShowLoading, ReloadData } from "../../redux/rootslice";
+import { HideLoading, ShowLoading, ReloadData } from "../redux/rootslice";
 import axios from "axios";
 
 const AdminExperiences = () => {

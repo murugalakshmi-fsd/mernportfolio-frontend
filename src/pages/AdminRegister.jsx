@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { message } from "antd";
-import "../../CSS/adminreg.css"
+import "../CSS/adminreg.css"
 
 const RegistrationForm = () => {
   const [username, setUsername] = useState("");

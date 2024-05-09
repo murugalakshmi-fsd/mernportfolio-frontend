@@ -1,6 +1,6 @@
 import React from "react";
-import SectionTitle from "../../components/SectionTitle";
-import "../../CSS/Contact.css";
+import SectionTitle from "../components/SectionTitle";
+import "../CSS/Contact.css";
 import { useSelector } from "react-redux";
 const Contact = () => {
     const {portfolioData}=useSelector((state)=>state.root);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import SectionTitle from '../../components/SectionTitle'
-import { experiences} from'../../resources/experiences'
-import '../../CSS/Experience.css'
+import SectionTitle from '../components/SectionTitle'
+import '../CSS/Experience.css'
 import { useSelector } from 'react-redux'
 const Experiences = () => {
   const [selectedIndex,setselectedIndex]=useState(0);

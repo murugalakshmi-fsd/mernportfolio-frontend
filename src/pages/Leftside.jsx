@@ -2,7 +2,7 @@ import React from 'react'
 import { CiFacebook ,CiMail} from "react-icons/ci";
 // import { FaBootstrap } from "react-icons/fa";
 import { FaXTwitter,FaInstagram,FaGithub,FaLinkedinIn } from "react-icons/fa6";
-import "../../CSS/Leftside.css"
+import "../CSS/Leftside.css"
 
 const Leftside = () => {
   return (

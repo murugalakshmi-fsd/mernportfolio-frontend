@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
-import { ShowLoading, HideLoading } from "../../redux/rootslice";
-import "../../CSS/login.css"
+import { ShowLoading, HideLoading } from "../redux/rootslice";
+import "../CSS/login.css"
 
 const Login = () => {
   const [user, setUser] = useState({ username: "", password: "" });

@@ -1,9 +1,9 @@
 import React from "react";
-import "../../CSS/AdminAbout.css";
+import "../CSS/AdminAbout.css";
 import { Form, Input, message } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowLoading, HideLoading } from "../../redux/rootslice";
+import { ShowLoading, HideLoading } from "../redux/rootslice";
 import axios from "axios";
 
 const AdminAbout = () => {

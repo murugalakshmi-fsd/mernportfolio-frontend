@@ -1,6 +1,6 @@
 import React from "react";
-import SectionTitle from "../../components/SectionTitle";
-import "../../CSS/about.css";
+import SectionTitle from "../components/SectionTitle";
+import "../CSS/about.css";
 import { useSelector } from "react-redux";
 const About = () => {
   const {loading,portfolioData}=useSelector((state)=>state.root);

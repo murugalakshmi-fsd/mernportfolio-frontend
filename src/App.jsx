@@ -1,21 +1,21 @@
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter,Routes,Route, Outlet } from 'react-router-dom'
-import Home from './pages/Home/Index'
-import Admin from './pages/Admin/Index'
+import Home from './pages/Index'
+import Admin from './pages/AdminIndex'
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { HideLoading, ReloadData, SetPortfolioData, ShowLoading } from './redux/rootslice'
-import Login from './pages/Admin/Login'
-import AdminRegister from './pages/Admin/AdminRegister'
-import Layout from './pages/Home/Layout'
-import About from './pages/Home/About'
-import Experiences from './pages/Home/Experiences'
-import Courses from './pages/Home/Courses'
-import Projects from './pages/Home/Projects'
-import Contact from './pages/Home/Contact'
+import Login from './pages/Login'
+import AdminRegister from './pages/AdminRegister'
+import Layout from './pages/Layout'
+import About from './pages/About'
+import Experiences from './pages/Experiences'
+import Courses from './pages/Courses'
+import Projects from './pages/Projects'
+import Contact from './pages/Contact'
 
 // import { saveAs } from 'file-saver';
 // import MyPDFDocument from './pages/Home/PDFDocument'
@@ -54,7 +54,7 @@ function App() {
      {loading?<Loader/>:null}
     <Routes>
       <Route path="/" element={<Layout/>}>
-      <Route index element={<Home />}/>
+      <Route index element={<Home/>}/>
       <Route path="about" element={<About/>}/>
       <Route path="experience" element={<Experiences/>}/>
       <Route path="project" element={<Projects/>}/>

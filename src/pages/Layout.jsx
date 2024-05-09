@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import "../../CSS/layout.css";
-import Header from "../../components/Header";
+import "../CSS/layout.css";
+import Header from "../components/Header";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 const Layout = () => {

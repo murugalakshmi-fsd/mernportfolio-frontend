@@ -1,4 +1,4 @@
-import Header from "../../components/Header";
+import Header from "../components/Header";
 import React, { useEffect } from "react";
 import { Tabs } from "antd";
 import AdminIntro from "./AdminIntro";
@@ -8,7 +8,7 @@ import AdminExperiences from "./AdminExperiences";
 import AdminProjects from "./AdminProjects";
 import AdminCourses from "./AdminCourses";
 import AdminContact from "./AdminContact";
-import '../../CSS/adminindex.css'
+import '../CSS/adminindex.css'
 
 const { TabPane } = Tabs;
 
