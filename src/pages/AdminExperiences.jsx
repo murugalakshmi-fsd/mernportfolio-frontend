@@ -29,7 +29,7 @@ const AdminExperiences = () => {
         );
       } else {
         response = await axios.post(
-          "http://localhost:5000/api/portfolio/add-experience",
+          "http://localhost:5000/portfolio/add-experience",
           values
         );
       }
@@ -53,7 +53,7 @@ const AdminExperiences = () => {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "http://localhost:5000/api/portfolio/delete-experience",
+        "http://localhost:5000/portfolio/delete-experience",
         {
           _id: item._id,
         }

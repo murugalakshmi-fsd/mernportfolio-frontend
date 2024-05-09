@@ -30,7 +30,7 @@ const onFinish = async (values) => {
       );
     } else {
       response = await axios.post(
-        "http://localhost:5000/api/portfolio/add-course",
+        "http://localhost:5000/portfolio/add-course",
         values
       );
     }
@@ -55,7 +55,7 @@ const onDelete = async (item) => {
   try {
     dispatch(ShowLoading());
     const response = await axios.post(
-      "http://localhost:5000/api/portfolio/delete-course",
+      "http://localhost:5000/portfolio/delete-course",
       {
         _id: item._id,
       }

@@ -30,7 +30,7 @@ const AdminProjects = () => {
           );
         } else {
           response = await axios.post(
-            "http://localhost:5000/api/portfolio/add-project",
+            "http://localhost:5000/portfolio/add-project",
             values
           );
         }
@@ -54,7 +54,7 @@ const AdminProjects = () => {
       try {
         dispatch(ShowLoading());
         const response = await axios.post(
-          "http://localhost:5000/api/portfolio/delete-project",
+          "http://localhost:5000/portfolio/delete-project",
           {
             _id: item._id,
           }
@@ -66,6 +66,7 @@ const AdminProjects = () => {
           dispatch(ReloadData(true));
         } else {
           message.error(response.data.message);
+          console.log("Error:",response.data.message);
         }
       } catch (error) {
         dispatch(HideLoading());
