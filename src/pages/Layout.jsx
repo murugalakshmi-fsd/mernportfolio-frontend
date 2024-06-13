@@ -8,8 +8,8 @@ const Layout = () => {
   return (
     <div className="layout vh-100">
       <div className="head">
-        <Header />
-      </div>
+        <Header/>
+        </div>
       <Navbar variant="dark" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -46,8 +46,10 @@ const Layout = () => {
         </Nav>
       </Navbar>
       <Outlet />
+     
     </div>
   );
 };
 
 export default Layout;
+

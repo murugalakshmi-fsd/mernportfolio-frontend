@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useForm } from 'antd/es/form/Form';
 
 const AdminCourses = () =>{
- const dispatch = useDispatch();
+const dispatch = useDispatch();
 const { portfolioData } = useSelector((state) => state.root);
 const { courses } = portfolioData;
 const [showAddEditModal, setshowAddEditModal] = useState(false);

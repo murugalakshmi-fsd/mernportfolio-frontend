@@ -17,9 +17,6 @@ import Courses from './pages/Courses'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 
-// import { saveAs } from 'file-saver';
-// import MyPDFDocument from './pages/Home/PDFDocument'
-
 function App() {
   const {loading,portfolioData,reloadData} = useSelector((state)=>state.root);
   const dispatch = useDispatch();

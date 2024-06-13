@@ -3,7 +3,7 @@ import axios from "axios";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/rootslice";
-import "../CSS/login.css"
+import "../CSS/login.css";
 
 const Login = () => {
   const [user, setUser] = useState({ username: "", password: "" });
@@ -12,25 +12,20 @@ const Login = () => {
   const login = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/admin-login", user);
+      const response = await axios.post("https://mernportfolio-backend.onrender.com/admin/admin-login", user);
       dispatch(HideLoading());
-      console.log("Response:", response);
-      console.log("Response data:", response.data);
-       console.log("Token:", response.data.token);
+
       if (response && response.data && response.data.token) {
-        message.success(response.data.message);
+        message.success(response.data? response.data.message:"Login Successful");
         localStorage.setItem("token", JSON.stringify(response.data.token));
-        console.log("Redirecting to admin page...");
         window.location.href = "/admin";
       } else {
         message.error(response.data ? response.data.message : "Login failed");
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        // Unauthorized error, display appropriate message
         message.error("Invalid credentials");
       } else {
-        // Other errors, display generic message
         message.error("An error occurred. Please try again later.");
       }
       dispatch(HideLoading());
@@ -38,18 +33,18 @@ const Login = () => {
   };
 
   return (
-      <div className="login d-flex align-items-center justify-content-center vh-100">
+    <div className="login d-flex align-items-center justify-content-center vh-100">
       <div className="inner w-96 p-4 d-flex gap-3 shadow border border-gray-100 flex-column bg-white rounded">
         <h5 className="text-primary">Admin Login</h5>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           value={user.username}
           onChange={(e) => setUser({ ...user, username: e.target.value })}
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={user.password}
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
@@ -58,7 +53,6 @@ const Login = () => {
         </button>
       </div>
     </div>
-    
   );
 };
 

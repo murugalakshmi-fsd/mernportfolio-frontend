@@ -4,40 +4,35 @@ import { message } from "antd";
 import "../CSS/adminreg.css"
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [user, setUser] = useState({ username: "", email: "", password: "" });
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateEmail(user.email)) {
+      message.error("Please provide a valid email address");
+      return;
+    }
+
     try {
-      const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/admin-register", { username, password });
-      if (response.status === 201) {
-            window.location.href = "/admin-login";
-             message.success("Login Successfully");
+      const response = await axios.post("https://mernportfolio-backend.onrender.com/admin/admin-register", user);
+    if (response && response.data) {
+        message.success(response.data.message);
+         window.location.href = "/admin-login";
       } else {
-          message.error("Registration failed. Please try again.");
+        message.error(response.data ? response.data.message : "Registration failed");
       }
     } catch (error) {
-      // Handle network errors or unexpected responses
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        if (error.response.status === 400) {
-          // Handle username already exists error
-          message.error(error.response.data.message);
-        } else if (error.response.status === 401 || error.response.status === 500) {
-          // Handle other errors
-          message.error("Registration failed. Please try again.");
-        }
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("No response received:", error.request);
-        message.error("No response received. Please try again later.");
+      if (error.response && error.response.status === 400) {
+        message.error(error.response.data.message);
       } else {
-        // Something happened in setting up the request that triggered an error
-        console.error("Error setting up the request:", error.message);
         message.error("An error occurred. Please try again later.");
       }
+      dispatch(HideLoading());
     }
   };
   
@@ -50,18 +45,29 @@ const RegistrationForm = () => {
           <input
             className="rounded"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={user.username}
+            onChange={(e) => setUser({ ...user, username: e.target.value })}
             placeholder="Enter your username"
+            required
           />
+        </div>
+        <div className=" p-2 mx-2">
+        <input
+          type="email"
+          placeholder="Enter your Email"
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          required
+        />
         </div>
         <div className=" p-2 mx-2">
           <input
             className="rounded"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             placeholder="Enter your password"
+            required
           />
         </div>
         <button type="submit" className="btn btn-success text-white p-1 rounded">Register</button>
