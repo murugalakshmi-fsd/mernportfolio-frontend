@@ -1,20 +1,26 @@
 import React from "react";
 import SectionTitle from "../components/SectionTitle";
 import "../CSS/Contact.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPortfolioData } from "../redux/rootslice";
+import { useEffect } from "react";
 const Contact = () => {
-    const {portfolioData}=useSelector((state)=>state.root);
-    const {contacts} = portfolioData;
+  const dispatch=useDispatch();
+  const {loading,portfolioData}=useSelector((state)=>state.root);
+  // useEffect(() => {
+  //   dispatch(fetchPortfolioData());
+  // }, [dispatch]);
+    const contact = portfolioData.portfolio.contact;
   return (
     <div className="p-4">
       <SectionTitle title="Say Hello" />
       <div className="container d-flex flex-md-row flex-column align-items-center justify-content-between ">
         <div className="col-md-6 d-flex flex-column gap-0">
           <p className="text-white">{"{"}</p>
-          {Object.keys(contacts).map((key) => key !== "_id" && (
+          {Object.keys(contact).map((key) => key !== "_id" && (
             <p className="ms-2">
               <span className="text">{key}</span>:{" "}
-              <span className="text">{contacts[key]}</span>
+              <span className="text">{contact[key]}</span>
             </p>
           ))}
           <p className="text-white">{"}"}</p>

@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../CSS/intro.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { fetchPortfolioData } from "../redux/rootslice";
 const Intro = () => {
+  const dispatch=useDispatch();
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  const {intros}=portfolioData || {};
-  const {firstName,lastName,welcomeText,caption,description}=intros || {} ;
-
+  const {portfolio}=portfolioData || {};
+  const {firstName,lastName,welcomeText,caption,description}=portfolio.intro|| {} ;
+  // useEffect(() => {
+  //   dispatch(fetchPortfolioData());
+  // }, [dispatch]);
+  
+console.log(portfolio.intro)
   const handleExportPDF = async () => {
     try {
-      const response = await axios.get('https://mernportfolio-backend.onrender.com/portfolio/export-pdf', {
+      const response = await axios.get('/portfolio/export-pdf', {
         responseType: 'blob', // Set response type to blob
       });
 

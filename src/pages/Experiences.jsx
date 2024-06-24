@@ -1,12 +1,21 @@
 import React, { useState } from 'react'
 import SectionTitle from '../components/SectionTitle'
 import '../CSS/Experience.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPortfolioData } from '../redux/rootslice'
+import { useEffect } from 'react'
 const Experiences = () => {
-  const [selectedIndex,setselectedIndex]=useState(0);
+  const dispatch=useDispatch();
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  const {experiences}=portfolioData || {};
- 
+  // useEffect(() => {
+  //   dispatch(fetchPortfolioData());
+  // }, [dispatch]);
+  const [selectedIndex,setselectedIndex]=useState(0);
+  console.log(portfolioData)
+  // const {portfolio}=portfolioData.portfolio || {};
+  // console.log(portfolio)
+  const experiences=portfolioData.portfolio.experiences|| [];
+  console.log(experiences)
 
   return (
     <div className='container'>

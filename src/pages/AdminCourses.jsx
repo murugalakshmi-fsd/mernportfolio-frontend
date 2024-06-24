@@ -1,173 +1,177 @@
-import { Form, Modal,message } from 'antd';
-import FormItem from 'antd/es/form/FormItem';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Input, Modal, message, Button, Spin } from "antd";
+import {
+  hideLoading,
+  showLoading,
+  setReloadData,
+  fetchPortfolioData,
+} from "../redux/rootslice";
+import axiosInstance from "../axiosConfig";
 import "../CSS/AdminExperience.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { HideLoading, ShowLoading, ReloadData } from "../redux/rootslice";
-import axios from 'axios';
-import { useForm } from 'antd/es/form/Form';
 
-const AdminCourses = () =>{
-const dispatch = useDispatch();
-const { portfolioData } = useSelector((state) => state.root);
-const { courses } = portfolioData;
-const [showAddEditModal, setshowAddEditModal] = useState(false);
-const [selectedItemforEdit, setselectedItemforEdit] = useState(null);
-const [type, settype] = useState("add");
-// const [form] = useForm();
+const AdminCourses= () => {
+  const dispatch = useDispatch();
+  const { portfolioData, loading, reloadData } = useSelector(
+    (state) => state.root
+  );
+  const { portfolio } = portfolioData || {};
+  const courses = portfolio?.courses || [];
 
-const onFinish = async (values) => {
-  try {
-    dispatch(ShowLoading());
-    let response;
-    if (selectedItemforEdit) {
-      response = await axios.post(
-        "https://mernportfolio-backend.onrender.com/portfolio/update-course",
-        {
-          ...values,
-          _id: selectedItemforEdit._id,
-        }
-      );
-    } else {
-      response = await axios.post(
-        "https://mernportfolio-backend.onrender.com/portfolio/add-course",
-        values
-      );
+  useEffect(() => {
+    if (!portfolioData || reloadData) {
+      dispatch(fetchPortfolioData());
+      dispatch(setReloadData(false)); // Reset reloadData flag
     }
+  }, [portfolioData, reloadData, dispatch]);
 
-    dispatch(HideLoading());
-    if (response.data.success) {
-      message.success(response.data.message);
-      setshowAddEditModal(false);
-      setselectedItemforEdit(null);
-      dispatch(HideLoading());
-      dispatch(ReloadData(true));
-    //   form.resetFields();
-    } else {
-      message.error(response.data.message);
-    }
-  } catch (error) {
-    dispatch(HideLoading());
-    message.error(error.message);
-  }
-};
-const onDelete = async (item) => {
-  try {
-    dispatch(ShowLoading());
-    const response = await axios.post(
-      "https://mernportfolio-backend.onrender.com/portfolio/delete-course",
-      {
-        _id: item._id,
+  const [showAddEditModal, setShowAddEditModal] = useState(false);
+  const [selectedItemForEdit, setSelectedItemForEdit] = useState(null);
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    try {
+      dispatch(showLoading());
+
+      let response;
+      if (selectedItemForEdit) {
+        response = await axiosInstance.post(
+          `/portfolio/update-course/${selectedItemForEdit._id}`,
+          values
+        );
+      } else {
+        response = await axiosInstance.post(
+          "/portfolio/add-course",
+          values
+        );
       }
-    );
-    dispatch(HideLoading());
-    if (response.data.success) {
-      message.success(response.data.message);
-      dispatch(HideLoading());
-      dispatch(ReloadData(true));
-    } else {
-      message.error(response.data.message);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        setShowAddEditModal(false);
+        setSelectedItemForEdit(null);
+        dispatch(setReloadData(true)); // Trigger reload after successful update
+        form.resetFields(); // Reset form fields after submission
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error submitting form: ", error);
+      message.error(error.message);
     }
-  } catch (error) {
-    dispatch(HideLoading());
-    message.error(error.message);
-  }
-};
-return (
-  <div className="">
-    <div className="d-flex justify-content-end">
-      <button
-        className="addcourse bg-secondary px-3 py-1 text-white"
-        onClick={() => {
-          setselectedItemforEdit(null);
-          setshowAddEditModal(true);
-          settype("add")
-        }}
-      >
-        Add Course
-      </button>
-    </div>
-    <div className="row gap-3 mt-1">
-      {courses.map((course) => (
-        <div className="col-md-4 Shadow border border-2 p-2 d-flex flex-column gap-2">
-          <h5 className="text-success-subtle text-center fw-bold">
-            {course.title}
-          </h5>
-          <hr />
-          <img src={course.image} alt='' className='h-50 w-53'/>
-          <p className="text-black">
-            description: {course.description}
-          </p>
-          <div className="d-flex justify-content-end gap-2 mt-5 ">
-            <button
-              className="btn1 text-black px-2 py-1 rounded"
-              onClick={() => {
-                setselectedItemforEdit(course);
-                setshowAddEditModal(true);
-                settype("edit");
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className="btn2 text-white px-2 py-1 rounded"
-              onClick={() => {
-                onDelete(course);
-              }}
-            >
-              Delete
-            </button>
+  };
+
+  const onDelete = async (item) => {
+    try {
+      dispatch(showLoading());
+      const response = await axiosInstance.delete(
+        `/portfolio/delete-course/${item._id}`
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        dispatch(setReloadData(true)); // Trigger reload after successful deletion
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      message.error(error.message);
+    }
+  };
+
+  const openAddEditModal = (course = null) => {
+    setSelectedItemForEdit(course);
+    setShowAddEditModal(true);
+    if (course) {
+      form.setFieldsValue(course);
+    } else {
+      form.resetFields();
+    }
+  };
+
+  return (
+    <div>
+      <div className="d-flex justify-content-end mb-3">
+        <Button
+          className="addcourse bg-secondary px-3 py-1 text-white"
+          onClick={() => openAddEditModal()}
+        >
+          Add course
+        </Button>
+      </div>
+      <div className="row gap-2 mt-4">
+        {courses.map((course) => (
+           <div className="col-md-4 Shadow border border-2 p-2 d-flex flex-column gap-2">
+           <h5 className="text-success-subtle text-center fw-bold">
+             {course.title}
+           </h5>
+           <hr />
+           <img src={course.image} alt='' className='h-50 w-53'/>
+           <p className="text-black">
+             description: {course.description}
+           </p>
+            <div className="d-flex justify-content-end gap-2 mt-5">
+              <Button
+                className="btn1 text-black px-2 py-1 rounded"
+                onClick={() => openAddEditModal(course)}
+              >
+                Edit
+              </Button>
+              <Button
+                className="btn2 text-white px-2 py-1 rounded"
+                onClick={() => onDelete(course)}
+              >
+                Delete
+              </Button>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-    {(type === "add" || selectedItemforEdit) && (
+        ))}
+      </div>
       <Modal
         open={showAddEditModal}
-        title={selectedItemforEdit ? "Edit Course" : "Add Course"}
+        title={selectedItemForEdit ? "Edit Course" : "Add Course"}
         footer={null}
-        onCancel={() => setshowAddEditModal(false)}
+        onCancel={() => setShowAddEditModal(false)}
       >
         <Form
-        //   form={form}
+          form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={selectedItemforEdit}
+          initialValues={selectedItemForEdit || {}}
         >
-          <FormItem name="title" label="Title">
-            <input placeholder="Title" />
-          </FormItem>
-
-          <FormItem name="image" label="Image Url">
-            <input placeholder="Image" />
-          </FormItem>
-              
-          <FormItem name="description" label="Description">
-            <textarea placeholder="Description" />
-          </FormItem>
-          
-          <FormItem name="link" label="Link">
-            <input placeholder="Link"/>
-          </FormItem>
-
+          <Form.Item name="title" label="Title">
+            <Input placeholder="Title" />
+          </Form.Item>
+          <Form.Item name="description" label="Description">
+            <Input placeholder="Description" />
+          </Form.Item>
+          <Form.Item name="image" label="ImageUrl">
+            <Input placeholder="ImageUrl" />
+          </Form.Item>
+          <Form.Item name="link" label="DemoLink">
+            <Input placeholder="Demolink" />
+          </Form.Item>
           <div className="d-flex justify-content-end">
-            <button
+            <Button
               className="border-success text-success bg-white px-3 py-2"
-              onClick={() => {
-                setshowAddEditModal(false);
-              }}
+              onClick={() => setShowAddEditModal(false)}
             >
               Cancel
-            </button>
-            <button className="bg-secondary text-white px-3 py-2 ">
-              {selectedItemforEdit ? "Update" : "add"}
-            </button>
+            </Button>
+            <Button
+              className="bg-secondary text-white px-3 py-2"
+              type="primary"
+              htmlType="submit"
+            >
+              {selectedItemForEdit ? "Update" : "Add"}
+            </Button>
           </div>
         </Form>
       </Modal>
-    )}
-  </div>
-);
-}
+    </div>
+  );
+};
 
-export default AdminCourses
+export default AdminCourses;

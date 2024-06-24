@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "../components/SectionTitle.jsx";
 import { courses } from "../resources/courses.jsx";
 import "../CSS/Course.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPortfolioData } from "../redux/rootslice.jsx";
 
 const Courses = () => {
-  const [selectedIndex, setselectedIndex] = useState(0);
+  const dispatch=useDispatch();
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  const {courses}=portfolioData || {};
+  // useEffect(() => {
+  //   dispatch(fetchPortfolioData());
+  // }, [dispatch]);
+  const [selectedIndex, setselectedIndex] = useState(0);
+   const courses=portfolioData.portfolio.courses || [];
   return (
     <div className="p-4">
       <SectionTitle title="Courses" />

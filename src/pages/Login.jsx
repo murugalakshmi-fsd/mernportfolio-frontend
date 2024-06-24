@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from '../axiosConfig';
 import { message } from "antd";
 import { useDispatch } from "react-redux";
-import { ShowLoading, HideLoading } from "../redux/rootslice";
+import { showLoading, hideLoading, setPortfolioData } from "../redux/rootslice";
 import "../CSS/login.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({ username: "", password: "" });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const login = async () => {
     try {
-      dispatch(ShowLoading());
-      const response = await axios.post("https://mernportfolio-backend.onrender.com/admin/admin-login", user);
-      dispatch(HideLoading());
+      dispatch(showLoading());
+      const response = await axiosInstance.post('/admin/admin-login', user);
+      dispatch(hideLoading());
 
-      if (response && response.data && response.data.token) {
-        message.success(response.data? response.data.message:"Login Successful");
+      if (response.data.token) {
+        message.success(response.data.message );
         localStorage.setItem("token", JSON.stringify(response.data.token));
-        window.location.href = "/admin";
+        // dispatch(setPortfolioData(response.data.user)); // Set user data in the state
+        navigate('/admin'); // Navigate to admin page
       } else {
         message.error(response.data ? response.data.message : "Login failed");
       }
@@ -28,7 +31,7 @@ const Login = () => {
       } else {
         message.error("An error occurred. Please try again later.");
       }
-      dispatch(HideLoading());
+      dispatch(hideLoading());
     }
   };
 
@@ -51,6 +54,8 @@ const Login = () => {
         <button className="btn btn-primary text-white p-2 rounded-lg" onClick={login}>
           Login
         </button>
+        <Link to="/reset-password">Forgot Password?</Link> 
+        <Link to="/admin-register">Signup</Link> 
       </div>
     </div>
   );

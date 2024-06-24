@@ -1,5 +1,4 @@
-import React from 'react'
-import Header from '../components/Header'
+import React, { useEffect } from 'react'
 import Intro from './Intro'
 import About from './About'
 import '../CSS/Index.css'
@@ -9,10 +8,17 @@ import Courses from './Courses'
 import Contact from './Contact'
 import Footer from './Footer'
 import Leftside from './Leftside'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPortfolioData } from '../redux/rootslice'
 
 const Home = () => {
+  const dispatch = useDispatch()
   const {loading,portfolioData}=useSelector((state)=>state.root);
+  
+  useEffect(() => {
+    dispatch(fetchPortfolioData());
+  }, [dispatch]);
+  
   return (
     <div className='home'>
         
@@ -23,8 +29,8 @@ const Home = () => {
         <Projects/>
         <Courses/>
         <Contact/>
-        <Footer/>
-        <Leftside/>
+        {/* <Footer/>
+        <Leftside/> */}
         </div>)}
        
     </div>

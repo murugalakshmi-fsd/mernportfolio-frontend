@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionTitle from "../components/SectionTitle";
 import "../CSS/about.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPortfolioData } from "../redux/rootslice";
 const About = () => {
+  const dispatch=useDispatch();
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  const {abouts}=portfolioData || {};
-  const {lottieUrl,description1,description,skills}=abouts || {} ;
+  useEffect(() => {
+    dispatch(fetchPortfolioData());
+  }, [dispatch]);
+  
+  const {portfolio}=portfolioData || {};
+  const {lottieUrl,description1,description,skills}=portfolio.about || {} ;
+  
+  
   return (
     <div className="p-4 about">
       <SectionTitle title="About"/>

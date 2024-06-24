@@ -1,67 +1,102 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../CSS/AdminIntro.css'
-import { Form,Input, message } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
+import { Form,Input, message,Spin } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { ShowLoading,HideLoading } from '../redux/rootslice'
-import axios from 'axios'
+import { showLoading,hideLoading,setPortfolioData, fetchPortfolioData} from '../redux/rootslice'
+import axiosInstance from '../axiosConfig';
 
 const AdminContact = () => {
-    const dispatch=useDispatch();
-    const {portfolioData} = useSelector((state)=>state.root);
-    //const intros = portfolioData ? portfolioData.intros : null;
-    // console.log(portfolioData?.intros);
+  const dispatch = useDispatch();
+  const { portfolioData, loading } = useSelector((state) => state.root);
+  const [form] = Form.useForm();
+  const {portfolio} = portfolioData || {};
 
-    const onFinish=async(values)=>{
-      try{
-          dispatch(ShowLoading());
-          const response = await axios.post("https://mernportfolio-backend.onrender.com/portfolio/update-contact",{
-            ...values,
-            _id:portfolioData.contacts._id,
+  useEffect(() => {
+    dispatch(fetchPortfolioData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (portfolio?.contact) {
+      const { name,  email, country} = portfolio.contact;
+      console.log(name,email);
+      form.setFieldsValue({
+        name: name || '',
+        email: email || '',
+        country : country || ''
       });
-      dispatch(HideLoading())
-      if(response.data.success){
-        message.success(response.data.message)
-      }else{
-        message.error(response.data.message)
+    } else {
+      form.resetFields();  // Reset form fields for new users
+    }
+  }, [portfolioData, form]);
+
+  const onFinish = async (values) => {
+    try {
+      dispatch(showLoading());
+
+      const contactId = portfolioData?.portfolio.contact?._id;
+
+      const response = await axiosInstance.post("/portfolio/update-contact", {
+        ...values,
+        _id: contactId,
+      });
+
+      dispatch(hideLoading());
+
+      if (response.data.success) {
+        message.success(response.data.message);
+        dispatch(setPortfolioData({ ...portfolioData, contact: values })); // Update local state
+      } else {
+        message.error(response.data.message);
+        console.log(response.data.message);
       }
-      }catch(error){
-          dispatch(HideLoading());
-          message.error(error.message);
+    } catch (error) {
+      dispatch(hideLoading());
+
+      // Improved error handling with detailed logs
+      if (error.response) {
+        console.log('Data:', error.response.data);
+        console.log('Status:', error.response.status);
+        console.log('Headers:', error.response.headers);
+        message.error(`Error: ${error.response.data.message || 'An error occurred'}`);
+      } else if (error.request) {
+        console.log('Request:', error.request);
+        message.error('No response received from server');
+      } else {
+        console.log('Error:', error.message);
+        message.error(`Error: ${error.message}`);
       }
     }
+  };
+
+  if (loading) {
+    return <Spin tip="Loading..."/>;
+  }
   return (
     <div>
-        <Form onFinish={onFinish} layout='vertical' initialValues={portfolioData.contacts}>
-        
-        <FormItem name='name' label='Name'>
-            <input placeholder='Name'/>
-        </FormItem>
-        
-        <FormItem name='email' label='Email'>
-            <input placeholder='caption'/>
-        </FormItem>
+        <div>
+      <Form
+        onFinish={onFinish}
+        layout='vertical'
+        form={form}
+        initialValues={portfolio?.contact}
+      >
+        <Form.Item name='name' label='Name'>
+          <Input placeholder='Name' />
+        </Form.Item>
 
-        <FormItem name='age' label='Age'>
-            <textarea placeholder='Age'/>
-        </FormItem>
+        <Form.Item name='email' label='Email'>
+          <Input placeholder='Email' />
+        </Form.Item>
 
-        <FormItem name='gender' label='Gender'>
-            <textarea placeholder='Gender'/>
-        </FormItem>
-
-        <FormItem name='mobile' label='Mobile'>
-            <textarea placeholder='Mobile'/>
-        </FormItem>
-
-        <FormItem name='country' label='Country'>
-            <textarea placeholder='Country'/>
-        </FormItem>
+        <Form.Item name='country' label='Country'>
+          <Input placeholder='Country' />
+        </Form.Item>
 
         <div className='d-flex justify-content-end'>
-            <button className='py-1  text-white' type='submit'>SAVE</button>
+          <button className='py-1 text-white' type='submit'>SAVE</button>
         </div>
-        </Form>
+      </Form>
+    </div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from '../axiosConfig';
 import { message } from "antd";
 import "../CSS/adminreg.css"
 
@@ -19,10 +19,10 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await axios.post("https://mernportfolio-backend.onrender.com/admin/admin-register", user);
+      const response = await axiosInstance.post("/admin/admin-register", user);
     if (response && response.data) {
         message.success(response.data.message);
-         window.location.href = "/admin-login";
+         window.location.href = "/";
       } else {
         message.error(response.data ? response.data.message : "Registration failed");
       }

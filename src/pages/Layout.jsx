@@ -7,43 +7,32 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 const Layout = () => {
   return (
     <div className="layout vh-100">
-      <div className="head">
-        <Header/>
-        </div>
+     
       <Navbar variant="dark" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link as={Link} to="/">
-              Home
+            <Nav.Link as={Link} to="/admin">
+              Admin
             </Nav.Link>
-            <Nav.Link as={Link} to="/about">
+            <Nav.Link as={Link} to="/home/about">
               About
             </Nav.Link>
-            <Nav.Link as={Link} to="/experience">
+            <Nav.Link as={Link} to="/home/experience">
               Experience
             </Nav.Link>
-            <Nav.Link as={Link} to="/project">
+            <Nav.Link as={Link} to="/home/project">
               Project
             </Nav.Link>
-            <Nav.Link as={Link} to="/course">
+            <Nav.Link as={Link} to="/home/course">
               Course
             </Nav.Link>
-            <Nav.Link as={Link} to="/contact">
+            <Nav.Link as={Link} to="/home/contact">
               Contact
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Nav className="ml-auto">
-          <NavDropdown title="Admin" id="basic-nav-dropdown">
-            <NavDropdown.Item as={Link} to="/admin-login">
-              Login
-            </NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/admin-register">
-              Signup
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
+       
       </Navbar>
       <Outlet />
      
