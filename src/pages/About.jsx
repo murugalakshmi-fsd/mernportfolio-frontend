@@ -11,7 +11,7 @@ const About = () => {
   }, [dispatch]);
   
   const {portfolio}=portfolioData || {};
-  const {lottieUrl,description1,description,skills}=portfolio.about || {} ;
+  const {lottieUrl,description1,skills}=portfolio.about || {} ;
   
   
   return (
@@ -19,19 +19,16 @@ const About = () => {
       <SectionTitle title="About"/>
       <div className="container row d-flex align-items-center">
         <div className="image col-md-6 ">
-          <dotlottie-player
+        <img
             src={lottieUrl}
-            background="transparent"
-            speed="1"
-            autoplay
-          ></dotlottie-player>
+            alt=""
+            className="image col-md-4"
+          />
         </div>
         <div className=" col-md-6 d-flex flex-column gap-2">
+        
           <p>
             {description1}
-          </p>
-          <p>
-            {description}
           </p>
         </div>
       </div>
