@@ -15,7 +15,7 @@ const About = () => {
   
   
   return (
-    <div className="p-4 about">
+    <div className="p-4">
       <SectionTitle title="About"/>
       <div className="container row d-flex align-items-center">
         <div className="image col-md-6 ">

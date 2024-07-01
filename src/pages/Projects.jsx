@@ -13,6 +13,11 @@ const Projects = () => {
   }, [dispatch]);
   const [selectedIndex, setselectedIndex] = useState(0);
   const projects=portfolioData.portfolio.projects|| [];
+  // useEffect(() => {
+  //   if (projects.length > 0) {
+  //     console.log("Projects data: ", projects);
+  //   }
+  // }, [projects]);
   return (
     <div className="p-4">
       <SectionTitle title="Projects" />
@@ -37,6 +42,7 @@ const Projects = () => {
             </div>
           ))}
         </div>
+        {projects.length > 0 && (
         <div className="col-md-8 d-flex flex-column align-items-center justify-content-center gap-5 flex-sm-row py-3">
             <img src={projects[selectedIndex].image} alt="" className="image col-md-4"/>
         <div className="d-flex flex-column gap-2">
@@ -44,7 +50,7 @@ const Projects = () => {
           <p className="text-white">{projects[selectedIndex].description}</p>
         </div>
         </div>
-        
+        )}
       </div>
     </div>
   );

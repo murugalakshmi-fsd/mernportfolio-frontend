@@ -8,9 +8,9 @@ const Intro = () => {
   const {loading,portfolioData}=useSelector((state)=>state.root);
   const {portfolio}=portfolioData || {};
   const {firstName,lastName,welcomeText,caption}=portfolio.intro|| {} ;
-  // useEffect(() => {
-  //   dispatch(fetchPortfolioData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchPortfolioData());
+  }, [dispatch]);
 
   const handleExportPDF = async () => {
     try {

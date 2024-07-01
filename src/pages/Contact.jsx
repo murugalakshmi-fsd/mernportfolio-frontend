@@ -7,9 +7,9 @@ import { useEffect } from "react";
 const Contact = () => {
   const dispatch=useDispatch();
   const {loading,portfolioData}=useSelector((state)=>state.root);
-  // useEffect(() => {
-  //   dispatch(fetchPortfolioData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchPortfolioData());
+  }, [dispatch]);
     const contact = portfolioData.portfolio.contact;
   return (
     <div className="p-4">
